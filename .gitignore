@@ -1,2 +1,8 @@
 # Ignoring outputs
 *.txt
+
+# Ignoring S.O Generated
+*~
+
+# Ignoring compiled src
+*.pyc
