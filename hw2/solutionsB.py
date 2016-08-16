@@ -261,25 +261,29 @@ def q5_output(tagged, filename):
 # The return value is a list of tagged sentences in the format "WORD/TAG", separated by spaces. Each sentence is a string with a 
 # terminal newline, not a list of tokens. 
 def nltk_tagger(brown_words, brown_tags, brown_dev_words):
-
+    '''
+    Some commented lines, were my first attempt to the problem. Accuracy
+    could be increased using a unigram based on my previous results.
+    To get the same as the specs, the tag for the default tagger should be
+    NOUN.
+    '''
     # Hint: use the following line to format data to what NLTK expects for training
     training = [ zip(brown_words[i],brown_tags[i]) for i in xrange(len(brown_words)) ]
 
     # IMPLEMENT THE REST OF THE FUNCTION HERE
     tagged = []
-    default_tagger = nltk.DefaultTagger('NN')
-    unigram_tagger = nltk.UnigramTagger(training, backoff=default_tagger)
-    bigram_tagger = nltk.BigramTagger(training, backoff=unigram_tagger)
+    default_tagger = nltk.DefaultTagger('NOUN')
+    #unigram_tagger = nltk.UnigramTagger(training, backoff=default_tagger)
+    bigram_tagger = nltk.BigramTagger(training, backoff=default_tagger)
     trigram_tagger = nltk.TrigramTagger(training, backoff=bigram_tagger)
-
+    
+    # Tagging sentences
     for sent in brown_dev_words:
-        sent.insert(0, START_SYMBOL)
-        sent.insert(0, START_SYMBOL)
-        sent.append(STOP_SYMBOL)
         y = trigram_tagger.tag(sent)
+        
         # Transforming to tagged sentence
         s = ''
-        for word, tag in y[2:-1]:
+        for word, tag in y:
             s += word + '/' + tag + ' '
         tagged.append(s)
     tagged = "\r\n".join(tagged)
