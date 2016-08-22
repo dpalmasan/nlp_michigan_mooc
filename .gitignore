@@ -6,3 +6,9 @@
 
 # Ignoring compiled src
 *.pyc
+*.model
+featureextractor.py
+*.exe
+*.answer
+*.best
+*.baseline
